@@ -9,8 +9,8 @@ pipeline {
     stage('Backend Test') {
       steps {
         dir('backend') {
-          bat 'python -m pip install -r requirements.txt'
-          bat 'python -m compileall app ml'
+          bat 'py -3 -m pip install -r requirements.txt'
+          bat 'py -3 -m compileall app ml'
         }
       }
     }
@@ -27,7 +27,7 @@ pipeline {
     stage('Train Model') {
       steps {
         dir('backend') {
-          bat 'python ml/train.py'
+          bat 'py -3 ml/train.py'
         }
       }
     }
