@@ -18,7 +18,7 @@ pipeline {
     stage('Frontend Test') {
       steps {
         dir('frontend') {
-          bat 'npm ci'
+          bat 'npm install'
           bat 'npm run build'
         }
       }
