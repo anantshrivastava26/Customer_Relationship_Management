@@ -18,7 +18,16 @@ if (-not $pidText) {
     exit 0
 }
 
-$pid = [int]$pidText
-Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
+$processId = 0
+try {
+    $processId = [int]$pidText
+}
+catch {
+    Remove-Item -Path $pidFile -Force -ErrorAction SilentlyContinue
+    Write-Host "Pid file content was invalid and has been removed."
+    exit 0
+}
+
+Stop-Process -Id $processId -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $pidFile -Force -ErrorAction SilentlyContinue
-Write-Host "Stopped staged backend process: $pid"
+Write-Host "Stopped staged backend process: $processId"
