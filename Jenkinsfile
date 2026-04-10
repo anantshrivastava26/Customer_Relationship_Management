@@ -24,9 +24,28 @@ if %errorlevel%==0 (
     exit /b %errorlevel%
 )
 
+for %%P in (
+    "%USERPROFILE%\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+    "%USERPROFILE%\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
+    "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe"
+    "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe"
+    "%ProgramFiles%\\Python312\\python.exe"
+    "%ProgramFiles%\\Python311\\python.exe"
+    "%ProgramFiles(x86)%\\Python312-32\\python.exe"
+    "%ProgramFiles(x86)%\\Python311-32\\python.exe"
+) do (
+    if exist %%~P (
+        "%%~P" ${args}
+        exit /b %errorlevel%
+    )
+)
+
 echo ERROR: Python was not found on this Jenkins agent.
 echo Install Python 3 and restart Jenkins service, or set WINDOWS_PYTHON to the full path.
 echo Example: C:\\Python312\\python.exe
+echo Jenkins account: %USERNAME%
+echo User profile: %USERPROFILE%
+echo If Python is user-scoped, run Jenkins service under that same Windows user.
 exit /b 1
 """
 }
